@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar"></div>
+
+        <div class="content">
+            <div class="apunte"><p class="titulo">tsconfig.json</p>
+<pre><code><span class="grouping">{</span>
+<span class="comment">...import...</span>
+<span class="string">"strictPropertyInitialization"</span>: <span class="keyword">false</span>,
+<span class="comment">...target....</span>
+<span class="grouping">}</span></code></pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">Comandos</p>
+<pre><code><span class="keyword">ng g c</span> <span class="identifier">componente</span>/<span class="type">home</span> <span class="comment">--skip-tests</span>
+    
+<span class="keyword">ng g c</span> <span class="identifier">componente</span>/<span class="type">proveedor-listar</span> <span class="comment">--skip-tests</span>
+<span class="keyword">ng g class</span> <span class="identifier">model</span>/<span class="type">proveedor</span> <span class="comment">--skip-tests</span>
+<span class="keyword">ng g s</span> <span class="identifier">services</span>/<span class="type">proveedor</span> <span class="comment">--skip-tests</span>
+
+ng add @angular/material</code></pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">src/environments/environment.ts</p>
+<pre><code><span class="keyword">export const</span> <span class="identifier">environment</span> = <span class="grouping">{</span>
+    <span class="identifier">production</span>: <span class="keyword">false</span>,
+    <span class="identifier">apiUrl</span>: <span class="string">'http://localhost:8080/api'</span>,
+<span class="grouping">}</span></code></pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">Model</p>
+<pre>
+<code><span class="keyword">export class</span> <span class="identifier">Proveedor</span> <span class="grouping">{</span>
+    <span class="identifier">idProveedor</span>: <span class="keyword">number</span>;
+    <span class="identifier">nombre</span>: <span class="keyword">string</span>;
+    <span class="identifier">fechaInscripcion</span class="keyword">: <span class="keyword">Date</span> = <span class="keyword">new</span> <span class="obj">Date</span> <span class="grouping-content">()</span>;
+    <span class="identifier">direccion</span>: <span class="keyword">string</span>;
+    <span class="identifier">telefono</span>: <span class="keyword">string</span>;
+    <span class="identifier">email</span>: <span class="keyword">string</span>;
+<span class="grouping">}</span></code>
+</pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">app.config.ts</p>
+<pre><code><span class="keyword">export const</span> <span class="identifier">appConfig</span>: <span class="keyword">ApplicationConfig</span> = <span class="grouping">{</span>
+    <span class="identifier">providers</span>: <span class="grouping-content">[</span><span class="comment">....</span>, <span class="obj">provideHttpClient</span><span class="grouping-content">()]</span>
+<span class="grouping">}</span>;</code></pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">services</p>
+<pre><code class="js"><span class="keyword">export class</span> <span class="identifier">ProveedorService</span> <span class="grouping">{</span>
+    <span class="keyword">private</span> <span class="identifier">url</span> = <span class="identifier">environment</span>.<span class="identifier">apiUrl</span>;
+    <span class="keyword">private</span> <span class="identifier">http</span>: <span class="obj">HttpClient</span> = <span class="keyword">inject</span><span class="grouping-content">(</span><span class="obj">HttpClient</span><span class="grouping-content">)</span>;
+    <span class="keyword">private</span> <span class="identifier">listaCambio</span>:<span class="obj">Subject</span>&lt;<span class="type">Proveedor</span>[]&gt; = <span class="keyword">new</span> <span class="obj">Subject</span>&lt;<span class="type">Proveedor</span>[]&gt;();
+
+    <span class="keyword">constructor</span> <span class="grouping-content">(){}</span>
+              
+    <span class="method">list</span><span class="grouping-content">()</span>: <span class="obj">Observable</span>&lt;<span class="keyword">any</span>&gt; <span class="grouping-content">{</span>
+        <span class="keyword">return</span> <span class="identifier">this</span>.<span class="identifier">http</span>.<span class="identifier">get</span>&lt;<span class="type">Proveedor</span>[]&gt;<span class="keyword">(</span><span class="keyword">this</span>.<span class="identifier">url</span> + <span class="string">"/proveedores"</span><span class="keyword">)</span>;
+    <span class="grouping-content">}</span>
+    <span class="method">listID</span><span class="grouping-content">(</span><span class="identifier">id</span>: <span class="keyword">number</span><span class="grouping-content">)</span>: <span class="obj">Observable</span>&lt;<span class="keyword">any</span>&gt; <span class="grouping-content">{</span>
+        <span class="keyword">return</span> <span class="identifier">this</span>.<span class="identifier">http</span>.<span class="identifier">get</span>&lt;<span class="type">Proveedor</span>[]&gt;<span class="keyword">(</span><span class="keyword">this</span>.<span class="identifier">url</span> + <span class="string">"/proveedor/"</span> + <span class="identifier">id</span><span class="keyword">)</span>;
+    <span class="grouping-content">}</span>
+    <span class="method">insert</span><span class="grouping-content">(</span><span class="identifier">obj</span>: <span class="type">Proveedor</span><span class="grouping-content">)</span>: <span class="obj">Observable</span>&lt;<span class="keyword">any</span>&gt; <span class="grouping-content">{</span>
+        <span class="keyword">return</span> <span class="identifier">this</span>.<span class="identifier">http</span>.<span class="identifier">post</span><span class="keyword">(</span><span class="keyword">this</span>.<span class="identifier">url</span> + <span class="string">"/proveedor"</span>, <span class="identifier">obj</span><span class="keyword">)</span>;
+    <span class="grouping-content">}</span>
+    <span class="method">update</span><span class="grouping-content">(</span><span class="identifier">obj</span>: <span class="type">Proveedor</span><span class="grouping-content">)</span>: <span class="obj">Observable</span>&lt;<span class="keyword">any</span>&gt; <span class="grouping-content">{</span>
+        <span class="keyword">return</span> <span class="identifier">this</span>.<span class="identifier">http</span>.<span class="identifier">put</span><span class="keyword">(</span><span class="keyword">this</span>.<span class="identifier">url</span> + <span class="string">"/proveedor"</span>, <span class="identifier">obj</span><span class="keyword">)</span>;
+    <span class="grouping-content">}</span>
+    <span class="method">delete</span><span class="grouping-content">(</span><span class="identifier">id</span>: <span class="keyword">number</span><span class="grouping-content">)</span> <span class="grouping-content">{</span>
+        <span class="keyword">return</span> <span class="identifier">this</span>.<span class="identifier">http</span>.<span class="identifier">delete</span><span class="keyword">(</span><span class="keyword">this</span>.<span class="identifier">url</span> + <span class="string">"/proveedor/"</span> + <span class="identifier">id</span><span class="keyword">)</span>;
+    <span class="grouping-content">}</span>
+
+    <span class="method">setList</span>(<span class="identifier">listaNueva</span>:<span class="type">Proveedor</span>[]){
+        <span class="keyword">return this</span>.<span class="identifier">listaCambio</span>.<span class="identifier">next</span>(<span class="identifier">listaNueva</span>);
+    }
+    <span class="method">getList</span>():<span class="obj">Observable</span><Prenda[]>{
+        <span class="keyword">return this</span>.<span class="identifier">listaCambio</span>.<span class="identifier">asObservable</span>();
+    }
+<span class="grouping">}</span></code></pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">app.routes.ts</p>
+<pre><code><span class="keyword">export const</span> <span class="identifier">routes</span>: <span class="obj">Routes</span> = <span class="grouping">[</span>
+    <span class="grouping-content">{</span> <span class="identifier">path</span>: <span class="string">''</span>, <span class="identifier">component</span>: <span class="type">HomeComponent</span> , <span class="identifier">pathMatch</span>: <span class="string">'full'</span> <span class="grouping-content">}</span>,
+    <span class="grouping-content">{</span> <span class="identifier">path</span>: <span class="string">'home'</span>, <span class="identifier">component</span>: <span class="type">HomeComponent</span> <span class="grouping-content">}</span>,
+    <span class="grouping-content">{</span> <span class="identifier">path</span>: <span class="string">'proveedores'</span>, <span class="identifier">component</span>: <span class="type">ProveedorListarComponent</span> <span class="grouping-content">}</span>,
+<span class="grouping">]</span>;</code></pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">app.componet.html</p>
+<pre><code><span class="keyword">&lt;nav&gt;</span>
+    <span class="keyword">&lt;a</span> <span class="obj">[routerLink]</span>=<span class="string">"'/'"</span><span class="keyword">&gt;</span>Home<span class="keyword">&lt;/a&gt;</span>
+    <span class="keyword">&lt;a</span> <span class="obj">[routerLink]</span>=<span class="string">"'proveedores'"</span><span class="keyword">&gt;</span>Proveedores<span class="keyword">&lt;/a&gt;</span>
+<span class="keyword">&lt;/nav&gt;</span>
+
+<span class="keyword">&lt;router-outlet /&gt;</span></code></pre>
+            </div>
+        </div>
+    </div>
+<script src="script.js"></script>
+<script> document.querySelector(".sidebar").querySelectorAll("a")[0].classList.add("selected")</script>
+</body>
+</html>

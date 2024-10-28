@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar"></div>
+        
+        <div class="content">
+<!-----------------------TABLA------------------------------>
+            <div class="apunte"><p class="titulo">TS</p>
+<pre><code>
+<span class="keyword">export class</span> <span class="identifier">ProveedorListarComponent</span> <span class="keyword">implements</span> <span class="obj">OnInit</span>, <span class="obj">AfterViewInit</span><span class="grouping">{</span>
+    <span class="identifier">lista</span>: <span class="type">Proveedor</span><span class="grouping-content">[]</span> = <span class="grouping-content">[]</span>;
+    <span class="identifier">displayedColumns</span>: <span class="keyword">string</span><span class="grouping-content">[]</span> = <span class="grouping-content">[</span><span class="string">'<span class="type">id</span>'</span>, <span class="string">'<span class="type">nombre</span>'</span>, <span class="string">'<span class="type">fechaInscripcion</span>'</span>, <span class="string">'<span class="type">direccion</span>'</span>, <span class="string">'<span class="type">telefono</span>'</span>, <span class="string">'<span class="type">email</span>'</span>, <span class="string">'<span class="type">editar</span>'</span>, <span class="string">'<span class="type">eliminar</span>'</span><span class="grouping-content">]</span>;
+    <span class="identifier">dataSource</span>: <span class="obj">MatTableDataSource</span><span class="keyword">&lt;</span><span class="type">Proveedor</span><span class="keyword">&gt;</span> = <span class="keyword">new</span> <span class="obj">MatTableDataSource</span><span class="keyword">&lt;</span><span class="type">Proveedor</span><span class="keyword">&gt;</span><span class="grouping-content">()</span>;
+      
+    <span class="obj">@ViewChild</span><span class="grouping-content">(</span><span class="obj">MatPaginator</span><span class="grouping-content">)</span> <span class="identifier">paginator</span>: <span class="obj">MatPaginator</span>;
+    <span class="obj">@ViewChild</span><span class="grouping-content">(</span><span class="obj">MatSort</span><span class="grouping-content">)</span> <span class="identifier">sort</span>: <span class="obj">MatSort</span>;
+      
+    <span class="identifier">service</span> : <span class="type">ProveedorService</span> = <span class="keyword">inject</span>(<span class="type">ProveedorService</span>);
+    <span class="identifier">route</span>: <span class="obj">Router</span> = <span class="keyword">inject</span>(<span class="obj">Router</span>);
+      
+    <span class="keyword">constructor</span><span class="grouping-content">() {</span>
+    <span class="grouping-content">}</span>
+      
+    <span class="method">ngAfterViewInit</span><span class="grouping-content">()</span>: <span class="keyword">void</span> <span class="grouping-content">{</span>
+        <span class="keyword">this</span>.<span class="identifier">dataSource</span>.<span class="identifier">sort</span> = <span class="keyword">this</span>.<span class="identifier">sort</span>;
+        <span class="keyword">this</span>.<span class="identifier">dataSource</span>.<span class="identifier">paginator</span> = <span class="keyword">this</span>.<span class="identifier">paginator</span>;
+    <span class="grouping-content">}</span>
+      
+    <span class="method">ngOnInit</span><span class="grouping-content">()</span>:<span class="keyword">void</span> <span class="grouping-content">{</span>
+        <span class="keyword">this</span>.<span class="method">loadLista</span><span class="keyword">()</span>;
+    <span class="grouping-content">}</span>
+    
+    <span class="method">loadLista</span><span class="grouping-content">()</span> <span class="grouping-content">{</span>
+        <span class="keyword">this</span>.<span class="identifier">service</span>.<span class="identifier">list</span><span class="keyword">()</span>.<span class="identifier">subscribe</span><span class="keyword">(</span><span class="grouping">{</span>
+            <span class="identifier">next</span>: <span class="grouping-content">(</span><span class="identifier">data</span><span class="grouping-content">)</span> => <span class="keyword">this</span>.<span class="identifier">dataSource</span>.<span class="identifier">data</span> = <span class="identifier">data</span>,
+            <span class="identifier">error</span>: <span class="grouping-content">(</span><span class="identifier">err</span><span class="grouping-content">)</span> => <span class="keyword">console</span>.<span class="identifier">error</span><span class="grouping-content">(</span><span class="string">"Error en consulta"</span>, <span class="identifier">err</span><span class="grouping-content">)</span>
+        <span class="grouping">}</span><span class="keyword">)</span>;
+    <span class="grouping-content">}</span>
+      
+<span class="grouping">}</span>
+</code></pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">HTML</p>
+<pre><code>
+&lt;<span class="keyword">div</span> <span class="identifier">class</span>=<span class="string">"mat-elevation-z8"</span>&gt;
+    &lt;<span class="keyword">table</span> <span class="obj">mat-table</span> <span class="obj">[dataSource]</span>=<span class="string">"<span class="type">dataSource</span>"</span> <span class="obj">matSort</span>&gt;
+  
+        <span class="comment">&lt;!-- Texto --&gt;</span>
+        &lt;<span class="obj">ng-container matColumnDef</span>=<span class="string">"<span class="type">id</span>"</span> &gt;
+            &lt;<span class="keyword">th</span> <span class="obj">mat-header-cell</span> *<span class="obj">matHeaderCellDef</span> <span class="obj">mat-sort-header</span>&gt; No. &lt;/<span class="keyword">th</span>&gt;
+            &lt;<span class="keyword">td</span> <span class="obj">mat-cell</span> *<span class="obj">matCellDef</span>=<span class="string">"let element"</span>&gt; {{<span class="identifier">element</span>.<span class="type">id</span>}} &lt;/<span class="keyword">td</span>&gt;
+        &lt;/<span class="obj">ng-containen</span>&gt;
+  
+
+        <span class="comment">&lt;!-- Boton Editar --&gt;</span>
+        &lt;<span class="obj">ng-container matColumnDef</span>=<span class="string">"<span class="type">editar</span>"</span> &gt;
+            &lt;<span class="keyword">th</span> <span class="obj">mat-header-cell</span> *<span class="obj">matHeaderCellDef</span>&gt; Editar &lt;/<span class="keyword">th</span>&gt;
+            &lt;<span class="keyword">td</span> <span class="obj">mat-cell</span> *<span class="obj">matCellDef</span>=<span class="string">"let element"</span>&gt;
+                &lt;<span class="keyword">button</span> <span class="obj">mat-raised-button</span> <span class="identifier">color</span>=<span class="string">"primary"</span> &gt;
+                    &lt;<span class="obj">[routerLink]</span>=<span class="string">"['/editar-agregar-prenda',<span class="identifier">element</span>.<span class="type">id</span>]"</span>&gt;
+                    &lt;<span class="keyword">span</span> <span class="identifier">class</span>=<span class="string">"material-icons"</span>&gt;update&lt;/<span class="keyword">span</span>&gt;
+                &lt;/<span class="keyword">button</span>&gt;
+            &lt;/<span class="keyword">td</span>&gt;
+        &lt;/<span class="obj">ng-containen</span>&gt;
+
+        <span class="comment">&lt;!-- Boton Eliminar --&gt;</span>
+        &lt;<span class="obj">ng-container matColumnDef</span>=<span class="string">"<span class="type">eliminar</span>"</span> &gt;
+            &lt;<span class="keyword">th</span> <span class="obj">mat-header-cell</span> *<span class="obj">matHeaderCellDef</span>&gt; Eliminar &lt;/<span class="keyword">th</span>&gt;
+            &lt;<span class="keyword">td</span> <span class="obj">mat-cell</span> *<span class="obj">matCellDef</span>=<span class="string">"let element"</span>&gt;
+                &lt;<span class="keyword">button</span> <span class="obj">mat-raised-button</span> <span class="identifier">color</span>=<span class="string">"warn"</span> &gt;
+                    <span class="obj">(click)</span>=<span class="string">"<span class="method">openDialog</span>(<span class="identifier">element</span>.<span class="type">id</span>)"</span>&gt;
+                    &lt;<span class="keyword">span</span> <span class="identifier">class</span>=<span class="string">"material-icons"</span>&gt;delete_sweep&lt;/<span class="keyword">span</span>&gt;
+                &lt;/<span class="keyword">button</span>&gt;
+            &lt;/<span class="keyword">td</span>&gt;
+        &lt;/<span class="obj">ng-containen</span>&gt;
+
+  
+        &lt;<span class="keyword">tr</span> <span class="obj">mat-header-row</span> *<span class="obj">matHeaderRowDef</span>=<span class="string">"displayedColumns"</span>&gt;&lt;/<span class="keyword">tr</span>&gt;
+        &lt;<span class="keyword">tr</span> <span class="obj">mat-row</span> *<span class="obj">matRowDef</span>=<span class="string">"let row; columns: displayedColumns;"</span>&gt;&lt;/<span class="keyword">tr</span>&gt;
+    &lt;/<span class="keyword">table</span>&gt;
+    &lt;<span class="obj">mat-paginator</span> [<span class="obj">pageSizeOptions</span>]=<span class="string">"[5, 10, 20]"</span>
+        <span class="obj">showFirstLastButtons</span>
+        <span class="obj">aria-label</span>=<span class="string">"Select page of periodic elements"</span>&gt;
+    &lt;/<span class="obj">mat-paginator</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+  </code></pre>
+            </div>
+        </main>
+    </div>
+<script src="script.js"></script>
+<script> document.querySelector(".sidebar").querySelectorAll("a")[1].classList.add("selected")</script>
+</body>
+</html>
