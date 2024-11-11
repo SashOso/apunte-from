@@ -15,7 +15,58 @@
         
         <div class="content">
 
+            <div class="apunte"><p class="titulo">DIALOG - HTML</p>
+                <pre><code>
+&lt;h2 mat-dialog-title&gt;Eliminar&lt;/h2&gt;
+&lt;mat-dialog-content&gt;
+    &lt;p&gt;¿Estás seguro de eliminar?&lt;/p&gt;
+&lt;/mat-dialog-content&gt;
+&lt;mat-dialog-actions&gt;
+    &lt;button mat-raised-button color="warn" mat-dialog-close&gt;No&lt;/button&gt;
+    &lt;button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial&gt;Sí&lt;/button&gt;
+&lt;/mat-dialog-actions&gt;
+                </code></pre>
+            </div>
 
+            <div class="apunte"><p class="titulo">LISTA - TS</p>
+                <pre><code>
+export class PrendaListarComponent implements OnInit, AfterViewInit{
+
+    dialog:MatDialog = inject(MatDialog);
+
+    onpenDialog(id:number):void{
+        const dialogRef=this.dialog.open(PrendaEliminarDialogComponent);
+        dialogRef.afterClosed().subscribe(result =>{
+            if(result){
+            console.log(id)
+            this.delete(id)
+            }else{
+            console.log("No se pudo eliminar")
+            }
+        })
+    }
+    delete(id:number):void{
+        console.log(id)
+        this.service.delete(id).subscribe(()=>{
+            this.loadLista();
+        })
+    }
+}
+                </code></pre>
+            </div>
+
+            <div class="apunte"><p class="titulo">LISTA - HTML</p>
+                <pre><code>
+&lt;ng-container matColumnDef="eliminar"&gt;
+    &lt;th mat-header-cell *matHeaderCellDef&gt; Update &lt;/th&gt;
+    &lt;td mat-cell *matCellDef="let element"&gt;
+        &lt;button mat-raised-button color="warn" (click)="onpenDialog(element.id)"&gt;
+            &lt;span class="material-icons"&gt;delete_sweep&lt;/span&gt;
+        &lt;/button&gt;
+    &lt;/td&gt;
+&lt;/ng-container&gt;
+                </code></pre>
+            </div>
 
         </div>
     </div>

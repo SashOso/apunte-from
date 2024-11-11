@@ -26,6 +26,11 @@
     <span class="identifier">edicion</span>: <span class="keyword">boolean</span> = <span class="keyword">false</span>;
     <span class="identifier">route</span>: <span class="obj">ActivatedRoute</span> = <span class="keyword">inject</span>(<span class="obj">ActivatedRoute</span>);
     <span class="identifier">id</span>: <span class="keyword">number</span> = 0 ;
+
+    tallaService:TallaService=inject(TallaService)
+    public idtalla: number = 0;
+    listatalla: Talla[] = [];
+    talla: Talla = new Talla();
     
     <span class="method">constructor</span>() {
         <span class="keyword">this</span>.<span class="identifier">formulario</span> = <span class="keyword">this</span>.<span class="identifier">fb</span>.<span class="identifier">group</span>({
@@ -37,9 +42,21 @@
             <span class="type">email</span>: [<span class="string">''</span>, [<span class="obj">Validators</span>.<span class="identifier">required</span>, <span class="obj">Validators</span>.<span class="identifier">email</span>]],
         })
     }
+
+    loadCombobox():void{
+        this.tallaService.list().subscribe({
+            next: (data: Talla[]) => {
+                this.listatalla = data;
+            },
+            error: (error: any) => {
+                console.error(error);
+            }
+        })
+    }
     
     
     <span class="method">ngOnInit</span>(): <span class="keyword">void</span> {
+        this.loadCombobox();
         <span class="keyword">this</span>.<span class="identifier">route</span>.<span class="identifier">params</span>.<span class="identifier">subscribe</span>((<span class="identifier">data</span>: <span class="obj">Params</span>) => {
             <span class="keyword">this</span>.<span class="identifier">id</span> = <span class="identifier">data</span>[<span class="string">'id'</span>];
             <span class="keyword">this</span>.<span class="identifier">edicion</span> = <span class="identifier">data</span>[<span class="string">'id'</span>] != <span class="keyword">null</span>;
@@ -115,6 +132,16 @@
             &lt;<span class="obj">mat-datepicker</span> <span class="obj">#picker</span>&gt;&lt;/<span class="obj">mat-datepicker</span>&gt;
         &lt;/<span class="obj">mat-form-field</span>&gt;
 
+        <span class="comment">&lt;!--ComboBox--&gt;</span>
+        &lt;mat-form-field appearance="fill"&gt;
+            &lt;mat-label&gt;Tipo&lt;/mat-label&gt;
+            &lt;mat-select formControlName="tipoPrenda" [(value)]="idtipoPrenda" required&gt;
+                &lt;mat-option *ngFor="let item of listaTipoPrenda" [value]="item.id"&gt;
+                {{item.nombre}}
+                &lt;/mat-option&gt;
+            &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
         <span class="comment">&lt;!--Boton Registrar--&gt;</span>
         &lt;<span class="keyword">button</span> <span class="obj">mat-raised-button</span> <span class="identifier">color</span>=<span class="string">"primary"</span> <span class="obj">(click)</span>=<span class="string">"<span class="method">onSubmit</span>()"</span>&gt;Registrar&lt;/<span class="keyword">button</span>&gt;
 
@@ -122,6 +149,24 @@
     &lt;/<span class="obj">mat-card-content</span>&gt;
 &lt;/<span class="obj">mat-card</span>&gt;
 </code></pre>
+            </div>
+            
+            <div class="apunte"><p class="titulo">CSS</p>
+                <pre><code>
+.mat-mdc-card-title{
+    text-align: center;
+    padding: 10px;
+}
+.example-card {
+    margin: 0 auto;
+    width: 600px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+                </code></pre>
             </div>
 
             <div class="apunte"><p class="titulo">app.routes.ts</p>
