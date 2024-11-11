@@ -85,7 +85,7 @@ ng add @angular/material</code></pre>
     <span class="method">setList</span>(<span class="identifier">listaNueva</span>:<span class="type">Proveedor</span>[]){
         <span class="keyword">return this</span>.<span class="identifier">listaCambio</span>.<span class="identifier">next</span>(<span class="identifier">listaNueva</span>);
     }
-    <span class="method">getList</span>():<span class="obj">Observable</span><Prenda[]>{
+    <span class="method">getList</span>():<span class="obj">Observable</span>&lt;<span class="type">Proveedor</span>[]&gt;{
         <span class="keyword">return this</span>.<span class="identifier">listaCambio</span>.<span class="identifier">asObservable</span>();
     }
 <span class="grouping">}</span></code></pre>
