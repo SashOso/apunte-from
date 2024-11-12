@@ -60,19 +60,19 @@
         &lt;<span class="obj">ng-container matColumnDef</span>=<span class="string">"<span class="type">id</span>"</span> &gt;
             &lt;<span class="keyword">th</span> <span class="obj">mat-header-cell</span> *<span class="obj">matHeaderCellDef</span> <span class="obj">mat-sort-header</span>&gt; No. &lt;/<span class="keyword">th</span>&gt;
             &lt;<span class="keyword">td</span> <span class="obj">mat-cell</span> *<span class="obj">matCellDef</span>=<span class="string">"let element"</span>&gt; {{<span class="identifier">element</span>.<span class="type">id</span>}} &lt;/<span class="keyword">td</span>&gt;
-        &lt;/<span class="obj">ng-containen</span>&gt;
+        &lt;/<span class="obj">ng-container</span>&gt;
   
 
         <span class="comment">&lt;!-- Boton Editar --&gt;</span>
         &lt;<span class="obj">ng-container matColumnDef</span>=<span class="string">"<span class="type">editar</span>"</span> &gt;
             &lt;<span class="keyword">th</span> <span class="obj">mat-header-cell</span> *<span class="obj">matHeaderCellDef</span>&gt; Editar &lt;/<span class="keyword">th</span>&gt;
             &lt;<span class="keyword">td</span> <span class="obj">mat-cell</span> *<span class="obj">matCellDef</span>=<span class="string">"let element"</span>&gt;
-                &lt;<span class="keyword">button</span> <span class="obj">mat-raised-button</span> <span class="identifier">color</span>=<span class="string">"primary"</span> &gt;
-                    &lt;<span class="obj">[routerLink]</span>=<span class="string">"['/editar-agregar-prenda',<span class="identifier">element</span>.<span class="type">id</span>]"</span>&gt;
+                &lt;<span class="keyword">button</span> <span class="obj">mat-raised-button</span> <span class="identifier">color</span>=<span class="string">"primary"</span>
+                    <span class="obj">[routerLink]</span>=<span class="string">"['/editar-agregar-prenda',<span class="identifier">element</span>.<span class="type">id</span>]"</span>&gt;
                     &lt;<span class="keyword">span</span> <span class="identifier">class</span>=<span class="string">"material-icons"</span>&gt;update&lt;/<span class="keyword">span</span>&gt;
                 &lt;/<span class="keyword">button</span>&gt;
             &lt;/<span class="keyword">td</span>&gt;
-        &lt;/<span class="obj">ng-containen</span>&gt;
+        &lt;/<span class="obj">ng-container</span>&gt;
 
         <span class="comment">&lt;!-- Boton Eliminar --&gt;</span>
         &lt;<span class="obj">ng-container matColumnDef</span>=<span class="string">"<span class="type">eliminar</span>"</span> &gt;
@@ -83,7 +83,7 @@
                     &lt;<span class="keyword">span</span> <span class="identifier">class</span>=<span class="string">"material-icons"</span>&gt;delete_sweep&lt;/<span class="keyword">span</span>&gt;
                 &lt;/<span class="keyword">button</span>&gt;
             &lt;/<span class="keyword">td</span>&gt;
-        &lt;/<span class="obj">ng-containen</span>&gt;
+        &lt;/<span class="obj">ng-container</span>&gt;
 
   
         &lt;<span class="keyword">tr</span> <span class="obj">mat-header-row</span> *<span class="obj">matHeaderRowDef</span>=<span class="string">"displayedColumns"</span>&gt;&lt;/<span class="keyword">tr</span>&gt;

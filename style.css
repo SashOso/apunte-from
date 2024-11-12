@@ -73,6 +73,24 @@
         }
     }
 }
+@media (max-width: 780px) {
+    .sidebar{
+        padding: 0px;
+        width: max-content;
+        & ul a{
+            padding: 0;
+            display: block;
+            border-radius: 0px;
+            width: 40px;
+            i{
+                height: 600px;
+            }
+            span{
+                display: none;
+            }
+        }
+    }
+}
 .content{
     width: 100%;
     overflow: auto;
