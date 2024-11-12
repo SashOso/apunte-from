@@ -17,6 +17,20 @@
             
             <div class="apunte"><p class="titulo">TS</p>
 <pre><code>
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle,MatDatepickerModule} from '@angular/material/datepicker';//add
+import {MatNativeDateModule, MatOption} from "@angular/material/core";//add
+import {MatInputModule} from "@angular/material/input";//add
+import {MatSelect} from '@angular/material/select';//add
+import {NgForOf} from '@angular/common';//add
+
+imports: [
+    ...
+    MatCardContent, MatLabel, MatHint, //add
+    MatDatepickerModule,//add
+    MatNativeDateModule, //add
+    MatInputModule, MatSelect, MatOption, NgForOf, //add
+  ],
+
 <span class="keyword">export class</span> <span class="identifier">ProveedorNuevoEditComponent</span> {
     <span class="identifier">formulario</span>: <span class="obj">FormGroup</span>;
     <span class="identifier">fb</span> = <span class="keyword">inject</span>(<span class="obj">FormBuilder</span>);
@@ -38,7 +52,7 @@
             <span class="type">nombre</span>: [<span class="string">''</span>, <span class="obj">Validators</span>.<span class="identifier">required</span>],
             <span class="type">fechaInscripcion</span>: [<span class="string">''</span>, <span class="obj">Validators</span>.<span class="identifier">required</span>],
             <span class="type">direccion</span>: [<span class="string">''</span>, <span class="obj">Validators</span>.<span class="identifier">required</span>],
-            <span class="type">telefono</span>: [<span class="string">''</span>, <span class="obj">Validators</span>.<span class="identifier">required</span>],
+            <span class="type">telefono</span>: [<span class="string">''</span>, [<span class="obj">Validators</span>.<span class="identifier">required</span>, <span class="obj">Validators</span>.<span class="identifier">pattern</span>(<span class="string">"^[0-9]{9}$"</span>)]],
             <span class="type">email</span>: [<span class="string">''</span>, [<span class="obj">Validators</span>.<span class="identifier">required</span>, <span class="obj">Validators</span>.<span class="identifier">email</span>]],
         })
     }
@@ -139,6 +153,16 @@
                 &lt;mat-option *ngFor="let item of listaTipoPrenda" [value]="item.id"&gt;
                 {{item.nombre}}
                 &lt;/mat-option&gt;
+            &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        <span class="comment">&lt;!--ComboBox estatico--&gt;</span>
+        &lt;mat-form-field appearance="fill"&gt;
+            &lt;mat-label&gt;Genero&lt;/mat-label&gt;
+            &lt;mat-select formControlName="genero"&gt;
+                &lt;mat-option value="Masculino"&gt;Masculino&lt;/mat-option&gt;
+                &lt;mat-option value="Femenino"&gt;Femenino&lt;/mat-option&gt;
+                &lt;mat-option value="Otro"&gt;Otro&lt;/mat-option&gt;
             &lt;/mat-select&gt;
         &lt;/mat-form-field&gt;
 
